@@ -23,6 +23,10 @@ common:
     # Uncomment this if you get the "No up-and-running site-local (private)
     # addresses" error.
     # NETWORK_HOST: "_eth0_"
+  # If enabled, shard allocation awareness will be enabled and the attribute set to the
+  # name of the kubernetes node.
+  # See https://www.elastic.co/guide/en/elasticsearch/reference/current/allocation-awareness.html
+  shardAllocationAwareness: false
 
   # If enabled, then the data and master nodes will be StatefulSets with
   # associated persistent volume claims.

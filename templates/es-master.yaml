@@ -82,6 +82,12 @@ spec:
               fieldPath: metadata.name
         - name: DISCOVERY_SERVICE
           value: {{ template "fullname" . }}-discovery
+        {{- if .Values.common.shardAllocationAwareness }}
+        - name: SHARD_ALLOCATION_AWARENESS
+          value: kubernetes-node
+        - name: SHARD_ALLOCATION_AWARENESS_ATTR
+          value: "/podinfo/node-name"
+        {{- end }}
         - name: ES_JAVA_OPTS
           value: "-Xms{{ .Values.master.heapMemory }} -Xmx{{ .Values.master.heapMemory }}"
         {{- range $key, $value :=  .Values.common.env }}

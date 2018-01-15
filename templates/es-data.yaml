@@ -41,6 +41,31 @@ spec:
                   component: {{ template "fullname" . }}
                   role: data
       {{- end }}
+      {{- if .Values.common.shardAllocationAwareness }}
+      initContainers:
+      - name: shardallocation-config
+        command:
+          - sh
+          - -c
+          - echo $KUBE_NODE_NAME > /podinfo/node-name
+        image: {{ .Values.image.init.repository }}:{{ .Values.image.init.tag }}
+        imagePullPolicy: {{ .Values.image.init.pullPolicy }}
+        env:
+          - name: KUBE_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+        resources:
+          limits:
+            cpu: 10m
+            memory: 50Mi
+          requests:
+            cpu: 10m
+            memory: 50Mi
+        volumeMounts:
+        - name: podinfo
+          mountPath: /podinfo
+      {{- end }}
       containers:
       - name: sysctl-conf
         command:
@@ -82,6 +107,12 @@ spec:
               fieldPath: metadata.name
         - name: DISCOVERY_SERVICE
           value: {{ template "fullname" . }}-discovery
+        {{- if .Values.common.shardAllocationAwareness }}
+        - name: SHARD_ALLOCATION_AWARENESS
+          value: kubernetes-node
+        - name: SHARD_ALLOCATION_AWARENESS_ATTR
+          value: "/podinfo/node-name"
+        {{- end }}
         - name: ES_JAVA_OPTS
           value: "-Xms{{ .Values.data.heapMemory }} -Xmx{{ .Values.data.heapMemory }}"
         {{- range $key, $value :=  .Values.common.env }}
@@ -106,8 +137,13 @@ spec:
         volumeMounts:
         - name: storage
           mountPath: /data
-      {{- if not .Values.common.stateful.enabled }}
+        - name: podinfo
+          mountPath: /podinfo
       volumes:
+        - emptyDir:
+            medium: ""
+          name: "podinfo"
+      {{- if not .Values.common.stateful.enabled }}
         - emptyDir:
             medium: ""
           name: "storage"
