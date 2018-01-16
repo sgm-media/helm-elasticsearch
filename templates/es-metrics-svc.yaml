@@ -1,0 +1,22 @@
+{{- if .Values.metrics.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "fullname" . }}-metrics
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    component: {{ template "fullname" . }}
+    role: metrics
+spec:
+  ports:
+  - port: 9108
+    name: metrics
+    targetPort: 9108
+    protocol: TCP
+  selector:
+    component: {{ template "fullname" . }}
+    role: metrics
+{{- end }}
