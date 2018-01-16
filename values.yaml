@@ -27,6 +27,12 @@ common:
   # name of the kubernetes node.
   # See https://www.elastic.co/guide/en/elasticsearch/reference/current/allocation-awareness.html
   shardAllocationAwareness: false
+  # Should you need to make adjustments to the liveness probe, maybe because the node
+  # takes quite long to start up (installing plugins, cpu limits,...) the probe can
+  # then be adjusted here (default values below)
+  livenessProbe:
+    periodSeconds: 10
+    failureThreshold: 3
 
   # If enabled, then the data and master nodes will be StatefulSets with
   # associated persistent volume claims.

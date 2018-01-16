@@ -97,6 +97,7 @@ spec:
         livenessProbe:
           tcpSocket:
             port: 9300
+{{ toYaml .Values.common.livenessProbe | indent 10 }}
         readinessProbe:
           httpGet:
             path: /_cluster/health
