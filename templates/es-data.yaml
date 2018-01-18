@@ -123,6 +123,10 @@ spec:
         - name: {{ $key | upper | replace "-" "_" }}
           value: {{ $value | quote }}
         {{- end }}
+        - name: PROCESSORS
+          valueFrom:
+            resourceFieldRef:
+              resource: limits.cpu
         resources:
 {{ toYaml .Values.data.resources | indent 10 }}
         ports:

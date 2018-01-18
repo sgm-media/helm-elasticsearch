@@ -85,6 +85,10 @@ spec:
         {{- end }}
         - name: "ES_JAVA_OPTS"
           value: "-Xms{{ .Values.client.heapMemory }} -Xmx{{ .Values.client.heapMemory }}"
+        - name: PROCESSORS
+          valueFrom:
+            resourceFieldRef:
+              resource: limits.cpu
         resources:
 {{ toYaml .Values.client.resources | indent 10 }}
         ports:
