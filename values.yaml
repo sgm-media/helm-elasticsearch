@@ -1,7 +1,7 @@
 image:
   es:
     repository: quay.io/pires/docker-elasticsearch-kubernetes
-    tag: 6.0.0
+    tag: 6.1.2
     pullPolicy: Always
   init:
     repository: busybox
@@ -46,7 +46,7 @@ common:
 # Client/ingest nodes can execute pre-processing pipelines, composed of
 # one or more ingest processors. Depending on the type of operations performed
 # by the ingest processors and the required resources, it may make sense to
-# have dedicated ingest nodes, that will only perform this specific task.  
+# have dedicated ingest nodes, that will only perform this specific task.
 client:
   # It isn't common to need more than 2 client nodes.
   replicas: 2
@@ -57,7 +57,12 @@ client:
   # OutOfMemoryErrors on startup.
   heapMemory: 256m
 
+  # When changing these values, make sure that *limits.cpu* is defined and
+  # an integer. The usual kubernetes notation with millicores or fractions
+  # does not work here!
   resources:
+    limits:
+      cpu: 1
     requests:
       memory: 256Mi
   ingress:
@@ -80,11 +85,11 @@ client:
     HTTP_ENABLE: "true"
 
 # Data nodes hold the shards that contain the documents you have indexed. Data
-# nodes handle data related operations like CRUD, search, and aggregations. 
-# These operations are I/O-, memory-, and CPU-intensive. It is important to 
+# nodes handle data related operations like CRUD, search, and aggregations.
+# These operations are I/O-, memory-, and CPU-intensive. It is important to
 # monitor these resources and to add more data nodes if they are overloaded.
 #
-# The main benefit of having dedicated data nodes is the separation of the 
+# The main benefit of having dedicated data nodes is the separation of the
 # master and data roles.
 data:
   # This count will depend on your data and computation needs.
@@ -96,7 +101,12 @@ data:
   # OutOfMemoryErrors on startup.
   heapMemory: 256m
 
+  # When changing these values, make sure that *limits.cpu* is defined and
+  # an integer. The usual kubernetes notation with millicores or fractions
+  # does not work here!
   resources:
+    limits:
+      cpu: 1
     requests:
       memory: 256Mi
 
@@ -115,20 +125,25 @@ data:
     size: 12Gi
 
 # The master node is responsible for lightweight cluster-wide actions such as
-# creating or deleting an index, tracking which nodes are part of the 
-# cluster, and deciding which shards to allocate to which nodes. It is 
+# creating or deleting an index, tracking which nodes are part of the
+# cluster, and deciding which shards to allocate to which nodes. It is
 # important for cluster health to have a stable master node.
 master:
   # Master replica count should be (#clients / 2) + 1, and generally at least 3.
   replicas: 3
   antiAffinity: "soft"
-  
+
   # The amount of RAM allocated to the JVM heap. This should be set to the
   # same value as master.resources.requests.memory, or you may see
   # OutOfMemoryErrors on startup.
   heapMemory: 256m
 
+  # When changing these values, make sure that *limits.cpu* is defined and
+  # an integer. The usual kubernetes notation with millicores or fractions
+  # does not work here!
   resources:
+    limits:
+      cpu: 1
     requests:
       memory: 256Mi
 
@@ -137,7 +152,7 @@ master:
     NODE_MASTER: "true"
     NODE_INGEST: "false"
     HTTP_ENABLE: "false"
-    
+
     # The default value for this environment variable is 2, meaning a cluster
     # will need a minimum of 2 master nodes to operate. If you have 3 masters
     # and one dies, the cluster still works.
@@ -149,7 +164,7 @@ master:
   stateful:
     # This is a default value, and will not be sufficient in a production
     # system. You'll probably want to increase it.
-    size: 2Gi  
+    size: 2Gi
 
 curator:
   enabled: true
@@ -233,4 +248,3 @@ metrics:
     repository: justwatch/elasticsearch_exporter
     tag: 1.0.2
     pullPolicy: IfNotPresent
-
