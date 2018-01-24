@@ -89,7 +89,7 @@ spec:
           value: "/podinfo/node-name"
         {{- end }}
         - name: ES_JAVA_OPTS
-          value: "-Xms{{ .Values.master.heapMemory }} -Xmx{{ .Values.master.heapMemory }}"
+          value: "-Xms{{ .Values.master.heapMemory }} -Xmx{{ .Values.master.heapMemory }} {{ .Values.master.javaOpts }}"
         {{- range $key, $value :=  .Values.common.env }}
         - name: {{ $key | upper | replace "-" "_" }}
           value: {{ $value | quote }}
