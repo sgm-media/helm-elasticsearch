@@ -84,7 +84,7 @@ spec:
           value: {{ $value | quote }}
         {{- end }}
         - name: "ES_JAVA_OPTS"
-          value: "-Xms{{ .Values.client.heapMemory }} -Xmx{{ .Values.client.heapMemory }}"
+          value: "-Xms{{ .Values.client.heapMemory }} -Xmx{{ .Values.client.heapMemory }} {{ .Values.client.javaOpts }}"
         - name: PROCESSORS
           valueFrom:
             resourceFieldRef:

@@ -57,6 +57,10 @@ client:
   # OutOfMemoryErrors on startup.
   heapMemory: 256m
 
+  # Additional java options for elasticsearch JVM
+  # https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-system-settings.html#jvm-options
+  javaOpts: ""
+
   # When changing these values, make sure that *limits.cpu* is defined and
   # an integer. The usual kubernetes notation with millicores or fractions
   # does not work here!
@@ -101,6 +105,10 @@ data:
   # OutOfMemoryErrors on startup.
   heapMemory: 256m
 
+  # Additional java options for elasticsearch JVM
+  # https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-system-settings.html#jvm-options
+  javaOpts: ""
+
   # When changing these values, make sure that *limits.cpu* is defined and
   # an integer. The usual kubernetes notation with millicores or fractions
   # does not work here!
@@ -137,6 +145,10 @@ master:
   # same value as master.resources.requests.memory, or you may see
   # OutOfMemoryErrors on startup.
   heapMemory: 256m
+
+  # Additional java options for elasticsearch JVM
+  # https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-system-settings.html#jvm-options
+  javaOpts: ""
 
   # When changing these values, make sure that *limits.cpu* is defined and
   # an integer. The usual kubernetes notation with millicores or fractions
