@@ -190,6 +190,13 @@ curator:
     unit: "days"
     unit_count: 3
 
+  # Enable elasticsearch snapshots via curator to configured repository
+  # Make sure, repository does exist. See elasticsearch docs for more information
+  # https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+  snapshots:
+    enabled: false
+    repository: default
+
 service:
   httpPort: 9200
   transportPort: 9300

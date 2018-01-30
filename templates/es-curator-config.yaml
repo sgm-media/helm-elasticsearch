@@ -36,6 +36,16 @@ data:
           stats_result:
           epoch:
           exclude: False
+  {{- if .Values.curator.snapshots.enabled }}
+      2:
+        action: snapshot
+        description: "Snapshot all indices"
+        options:
+          repository: {{ .Values.curator.snapshots.repository }}
+          wait_for_completion: True
+          max_wait: 3600
+          wait_interval: 10
+  {{- end }}
   config.yml: |-
     ---
     # Remember, leave a key empty if there is no value.  None will be a string,
