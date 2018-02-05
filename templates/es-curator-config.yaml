@@ -42,6 +42,7 @@ data:
         description: "Snapshot all indices"
         options:
           repository: {{ .Values.curator.snapshots.repository }}
+          name: 'curator-%Y%m%d'
           wait_for_completion: True
           max_wait: 3600
           wait_interval: 10
