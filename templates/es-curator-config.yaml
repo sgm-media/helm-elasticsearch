@@ -25,6 +25,7 @@ data:
           timeout_override:
           continue_if_exception: False
           disable_action: False
+          ignore_empty_list: True
         filters:
         - filtertype: age
           source: name
@@ -46,6 +47,7 @@ data:
           wait_for_completion: True
           max_wait: 3600
           wait_interval: 10
+       filters: []
   {{- end }}
   config.yml: |-
     ---
