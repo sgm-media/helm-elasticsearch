@@ -47,7 +47,7 @@ data:
           wait_for_completion: True
           max_wait: 3600
           wait_interval: 10
-       filters: []
+        filters: []
   {{- end }}
   config.yml: |-
     ---
