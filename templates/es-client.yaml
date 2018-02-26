@@ -123,7 +123,7 @@ spec:
         resources:
 {{ toYaml .Values.metrics.resources | indent 12 }}
         args:
-          - -es.uri=http://${POD_IP}:9200
+          - -es.uri=http://$(POD_IP):9200
         ports:
         - containerPort: 9108
           name: metrics
