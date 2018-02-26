@@ -25,3 +25,25 @@ Return the appropriate apiVersion for cronjob APIs.
 "batch/v2alpha1"
 {{- end -}}
 {{- end -}}
+
+{{- define "metrics.snippet" }}
+{{- if .Values.metrics.enabled }}
+      - name: metrics
+        image: "{{ .Values.metrics.image.repository }}:{{ .Values.metrics.image.tag }}"
+        imagePullPolicy: {{ .Values.metrics.image.pullPolicy }}
+        env:
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+        resources:
+{{ toYaml .Values.metrics.resources | indent 12 }}
+        args:
+          - -es.uri=http://$(POD_IP):9200
+        ports:
+        - containerPort: 9108
+          name: metrics
+          protocol: TCP
+{{- end }}
+{{- end }}
+
