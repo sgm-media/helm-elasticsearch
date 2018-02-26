@@ -111,7 +111,8 @@ spec:
         volumeMounts:
         - name: storage
           mountPath: /data
+{{ template "metrics.snippet" . }}
       volumes:
-          - emptyDir:
-              medium: ""
-            name: "storage"
+        - emptyDir:
+            medium: ""
+          name: "storage"

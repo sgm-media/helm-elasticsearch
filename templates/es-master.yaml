@@ -115,6 +115,7 @@ spec:
         volumeMounts:
         - name: storage
           mountPath: /data
+{{ template "metrics.snippet" . }}
       {{- if not .Values.common.stateful.enabled }}
       volumes:
         - emptyDir:

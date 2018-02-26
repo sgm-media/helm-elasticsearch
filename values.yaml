@@ -122,7 +122,7 @@ data:
     NODE_DATA: "true"
     NODE_MASTER: "false"
     NODE_INGEST: "false"
-    HTTP_ENABLE: "false"
+    HTTP_ENABLE: "true"
 
   # Determines the properties of the persistent volume claim associated with a
   # data node StatefulSet that is created when the common.stateful.enabled
@@ -163,7 +163,7 @@ master:
     NODE_DATA: "false"
     NODE_MASTER: "true"
     NODE_INGEST: "false"
-    HTTP_ENABLE: "false"
+    HTTP_ENABLE: "true"
 
     # The default value for this environment variable is 2, meaning a cluster
     # will need a minimum of 2 master nodes to operate. If you have 3 masters
