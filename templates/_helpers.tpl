@@ -40,6 +40,7 @@ Return the appropriate apiVersion for cronjob APIs.
 {{ toYaml .Values.metrics.resources | indent 12 }}
         args:
           - -es.uri=http://$(POD_IP):9200
+          - -es.indices
         ports:
         - containerPort: 9108
           name: metrics

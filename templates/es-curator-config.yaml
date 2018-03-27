@@ -47,6 +47,9 @@ data:
           wait_for_completion: True
           max_wait: 3600
           wait_interval: 10
+  {{- if .Values.curator.snapshots.include_global_state }}
+          include_global_state: True
+  {{- end }}
         filters: []
   {{- end }}
   config.yml: |-
