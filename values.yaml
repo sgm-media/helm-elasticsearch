@@ -196,6 +196,7 @@ curator:
   snapshots:
     enabled: false
     repository: default
+    include_global_state: true
 
 service:
   httpPort: 9200
