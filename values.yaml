@@ -31,8 +31,9 @@ common:
   # takes quite long to start up (installing plugins, cpu limits,...) the probe can
   # then be adjusted here (default values below)
   livenessProbe:
+    initialDelaySeconds: 60
     periodSeconds: 10
-    failureThreshold: 3
+    failureThreshold: 5
 
   # If enabled, then the data and master nodes will be StatefulSets with
   # associated persistent volume claims.
