@@ -134,11 +134,9 @@ spec:
           name: transport
           protocol: TCP
         livenessProbe:
-{{ toYaml .Values.common.livenessProbe | indent 10 }}
           tcpSocket:
             port: 9300
-          initialDelaySeconds: 20
-          periodSeconds: 10
+{{ toYaml .Values.common.livenessProbe | indent 10 }}
         volumeMounts:
         - name: storage
           mountPath: /data

@@ -109,9 +109,9 @@ spec:
           name: transport
           protocol: TCP
         livenessProbe:
-{{ toYaml .Values.common.livenessProbe | indent 10 }}
           tcpSocket:
             port: 9300
+{{ toYaml .Values.common.livenessProbe | indent 10 }}
         volumeMounts:
         - name: storage
           mountPath: /data
